@@ -1,0 +1,135 @@
+﻿<Window x:Name="XdbgTraceViewer" x:Class="XdbgTraceViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XdbgTraceViewer"
+        mc:Ignorable="d"
+        Title="XdbgTraceViewer" Height="772" Width="1344">
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <GroupBox x:Name="grpRecordDetails" Header="Record Details" Margin="425,10,0,10" HorizontalAlignment="Left" Width="385">
+            <Grid Margin="10,0,-2,4">
+                <TextBox x:Name="tbReturnValue" Margin="24,449,15,36" TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                <Label Content="Return value:" HorizontalAlignment="Left" Height="25" Margin="0,424,0,0" VerticalAlignment="Top" Width="169" FontWeight="Bold" ToolTip="Trace field 6" AutomationProperties.HelpText="Trace field 6"/>
+                <Label Content="Function name:" HorizontalAlignment="Left" Height="24" Margin="0,5,0,0" VerticalAlignment="Top" Width="184" FontWeight="Bold" ToolTip="Trace field 6" AutomationProperties.HelpText="Trace field 6"/>
+                <Label Content="Execution time:" HorizontalAlignment="Left" Height="25" Margin="0,114,0,0" VerticalAlignment="Top" Width="195" FontWeight="Bold" AutomationProperties.HelpText="Trace field 4: Exit minus entry time" ToolTip="Trace field 4: Exit minus entry time"/>
+                <ListBox x:Name="lbParameters" Height="109" Margin="24,195,15,0" VerticalAlignment="Top"/>
+                <Label Content="Parameter(s):" HorizontalAlignment="Left" Margin="0,169,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" AutomationProperties.HelpText="Trace field 12 - ..." ToolTip="Trace field 12 - ..."/>
+                <Label Content="File:" HorizontalAlignment="Left" Height="25" Margin="0,309,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" ToolTip="Trace field 9" AutomationProperties.HelpText="Trace field 9"/>
+                <Label Content="Line number:" HorizontalAlignment="Left" Height="25" Margin="0,369,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold" ToolTip="Trace field 10" AutomationProperties.HelpText="Trace field 10"/>
+                <TextBox x:Name="tbFunctionName" Height="80" Margin="24,29,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
+                <TextBox x:Name="tbExecutionTime" Height="25" Margin="24,139,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
+                <TextBox x:Name="tbFileName" Height="35" Margin="24,334,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
+                <TextBox x:Name="tbLineNumber" Height="25" Margin="24,394,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
+                <Button x:Name="btnTryToFormatResult" Content="Try to format return value" HorizontalAlignment="Left" Margin="24,0,0,5" Width="160" ToolTip="This can go horribly wrong" AutomationProperties.HelpText="This can go horribly wrong" Click="BtnTryToFormatResult_Click" Height="21" VerticalAlignment="Bottom"/>
+                <Button x:Name="btnDisplayOriginalResultValue" Content="Display original value" HorizontalAlignment="Left" Margin="200,0,0,5" Width="150" Click="BtnDisplayOriginalResultValue_Click" Height="21" VerticalAlignment="Bottom"/>
+            </Grid>
+        </GroupBox>
+        <Label Content="© SPA GmbH, Germany 2019, spa-gmbh.de&#xA;" HorizontalAlignment="Left" Margin="10,0,0,21" Width="365" FontSize="10" HorizontalContentAlignment="Center" Height="25" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+        <Label Content="Application Icon made by Freepik from flaticon.com." HorizontalAlignment="Left" Margin="445,0,0,281" Width="365" FontSize="10" HorizontalContentAlignment="Center" Height="25" VerticalAlignment="Bottom"/>
+        <GroupBox x:Name="gbTraceFileContent" Header="Trace File" HorizontalAlignment="Stretch" Height="Auto" Margin="815,10,10,10" VerticalAlignment="Stretch" Width="Auto">
+            <Grid Margin="0,0,-2,4">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TreeView x:Name="TraceItemsTree" Margin="10,10,10,36" SelectedItemChanged="TraceItemsTree_SelectedItemChanged"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling" Height="Auto" VerticalAlignment="Stretch">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type local:XdebugTraceItem}" ItemsSource="{Binding SubElements}">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                                </StackPanel.Resources>
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Collapse" Click="TraceItemsTreeContextCollapse_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="/XdbgTraceViewer;component/Images/unfold-less-horizontal.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Expand" Click="TraceItemsTreeContextExpand_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="/XdbgTraceViewer;component/Images/unfold-more-horizontal.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="[" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowFunctionNumbers}" />
+                                <TextBlock Text="{Binding FunctionNumber}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowFunctionNumbers}" />
+                                <TextBlock Text="] " Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowFunctionNumbers}" />
+                                <TextBlock Text="(" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowExecutionTime}" />
+                                <TextBlock Text="{Binding ExecutionTime}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowExecutionTime}" />
+                                <TextBlock Text=") " Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chkShowExecutionTime}" />
+                                <TextBlock Text="{Binding FunctionName}" FontSize="14" FontFamily="Verdana">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding HighlightOwn}" Value="True" />
+                                                        <Condition Binding="{Binding IsChecked, ElementName=ckbHighlightOwn}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+                <CheckBox x:Name="chkShowFunctionNumbers" Content="show function number" HorizontalAlignment="Left" Margin="161,0,0,7" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 2" AutomationProperties.HelpText="Trace field 2" />
+                <CheckBox x:Name="chkShowExecutionTime" Content="show function execution time" HorizontalAlignment="Left" Margin="309,0,0,7" Width="190" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 4: Exit minus entry time" AutomationProperties.HelpText="Trace field 4: Exit minus entry time"/>
+                <CheckBox x:Name="ckbHighlightOwn" Content="highlight own functions" HorizontalAlignment="Left" Margin="9,0,0,5" Width="170" Height="17" VerticalAlignment="Bottom" AutomationProperties.HelpText="Trace field 7: user-defined (1) or internal function (0)" ToolTip="Trace field 7: user-defined (1) or internal function (0)"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Trace file selection" HorizontalAlignment="Left" Margin="10,10,0,10" Width="410">
+            <Grid Margin="0,0,-12,-12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="TraceFileList" Margin="9,34,0,22" IsSynchronizedWithCurrentItem="True" RenderTransformOrigin="0.5,0.5" MouseUp="TraceFileList_MouseUp" HorizontalAlignment="Left" Width="380" SelectionMode="Single">
+                    <ListView.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleY="0.122"/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="0.406"/>
+                        </TransformGroup>
+                    </ListView.RenderTransform>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="XdebugTrace" DisplayMemberBinding="{Binding TraceFileName}" Width="150"/>
+                            <GridViewColumn Header="Timestamp" DisplayMemberBinding="{Binding TraceFileDate}" Width="120"/>
+                            <GridViewColumn Header="Size" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TraceFileSize}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBox x:Name="tbSelectedFolder" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding TracesFolder, Mode=TwoWay, Source={x:Static local:RuntimeConfig.Instance}}" VerticalAlignment="Top" Width="342" IsReadOnly="True"/>
+                <Button x:Name="btnSelectFolder" HorizontalAlignment="Left" Margin="357,10,0,0" VerticalAlignment="Top" Height="20" Width="32" Click="BtnSelectFolder_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/XdbgTraceViewer;component/Images/folder-open.png" Height="18" Width="26" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
