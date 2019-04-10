@@ -63,13 +63,24 @@ namespace XdbgTraceViewer
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
+                ClearRecordDetails();
+
                 var traceFileName = ((sender as ListView)?.SelectedItem as XdebugTraces.TraceFileListItem)?.TraceFileName;
                 if (traceFileName == null) return;
 
                 var traceFile = System.IO.Path.Combine(RuntimeConfig.Instance.TracesFolder, System.IO.Path.GetFileName(traceFileName));
 
-                TraceItemsTree.ItemsSource = XdebugTrace.ReadTraceFile(traceFile);
-                gbTraceFileContent.Header = "Trace File: " + traceFileName;
+                try
+                {
+                    TraceItemsTree.ItemsSource = XdebugTrace.ReadTraceFile(traceFile);
+                    gbTraceFileContent.Header = "Trace File: " + traceFileName;
+                }
+                catch (Exception exception)
+                {
+                    TraceItemsTree.ItemsSource = null;
+                    gbTraceFileContent.Header = "Trace File";
+                    MessageBox.Show(exception.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }));
         }
 
@@ -102,6 +113,8 @@ namespace XdbgTraceViewer
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
+                ClearRecordDetails();
+
                 var tv = (sender as TreeView);
                 if (!(tv?.SelectedItem is XdebugTraceItem traceItem)) return;
 
@@ -115,6 +128,19 @@ namespace XdbgTraceViewer
             }));
 
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Clear the Record details fields
+        /// </summary>
+        private void ClearRecordDetails()
+        {
+            tbFunctionName.Text = "";
+            tbExecutionTime.Text = "";
+            lbParameters.ItemsSource = null;
+            tbFileName.Text = "";
+            tbLineNumber.Text = "";
+            tbReturnValue.Text = "";
         }
 
         /// <summary>
