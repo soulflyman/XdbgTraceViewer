@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace XdbgTraceViewer
 {
