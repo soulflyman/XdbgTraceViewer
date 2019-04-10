@@ -130,7 +130,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="CHANGELOG.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -158,9 +157,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="COPYRIGHTS" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7 %28x86 and x64%29</ProductName>
@@ -172,8 +168,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="LICENSE.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>Copy /Y "$(SolutionDir)CHANGELOG" "$(TargetDir)"
+Copy /Y "$(SolutionDir)COPYRIGHTS" "$(TargetDir)"
+Copy /Y "$(SolutionDir)LICENSE" "$(TargetDir)"
+Copy /Y "$(SolutionDir)README.md" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
