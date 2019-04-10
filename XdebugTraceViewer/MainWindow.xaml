@@ -31,7 +31,6 @@
             </Grid>
         </GroupBox>
         <Label Content="© SPA GmbH, Germany 2019, spa-gmbh.de&#xA;" HorizontalAlignment="Left" Margin="10,0,0,21" Width="365" FontSize="10" HorizontalContentAlignment="Center" Height="25" VerticalAlignment="Bottom" Visibility="Collapsed"/>
-        <Label Content="Application Icon made by Freepik from flaticon.com." HorizontalAlignment="Left" Margin="445,0,0,281" Width="365" FontSize="10" HorizontalContentAlignment="Center" Height="25" VerticalAlignment="Bottom"/>
         <GroupBox x:Name="gbTraceFileContent" Header="Trace File" HorizontalAlignment="Stretch" Height="Auto" Margin="815,10,10,10" VerticalAlignment="Stretch" Width="Auto">
             <Grid Margin="0,0,-2,4">
                 <Grid.RowDefinitions>
