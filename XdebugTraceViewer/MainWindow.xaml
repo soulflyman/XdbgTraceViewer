@@ -26,8 +26,8 @@
                 <TextBox x:Name="tbExecutionTime" Height="25" Margin="24,139,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
                 <TextBox x:Name="tbFileName" Height="35" Margin="24,334,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
                 <TextBox x:Name="tbLineNumber" Height="25" Margin="24,394,15,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
-                <Button x:Name="btnTryToFormatResult" Content="Try to format return value" HorizontalAlignment="Left" Margin="24,0,0,5" Width="160" ToolTip="This can go horribly wrong" AutomationProperties.HelpText="This can go horribly wrong" Click="BtnTryToFormatResult_Click" Height="21" VerticalAlignment="Bottom"/>
-                <Button x:Name="btnDisplayOriginalResultValue" Content="Display original value" HorizontalAlignment="Left" Margin="200,0,0,5" Width="150" Click="BtnDisplayOriginalResultValue_Click" Height="21" VerticalAlignment="Bottom"/>
+                <Button x:Name="btnTryToFormatResult" Content="Try to _format return value" HorizontalAlignment="Left" Margin="24,0,0,5" Width="160" ToolTip="This can go horribly wrong" AutomationProperties.HelpText="This can go horribly wrong" Click="BtnTryToFormatResult_Click" Height="21" VerticalAlignment="Bottom"/>
+                <Button x:Name="btnDisplayOriginalResultValue" Content="Display _original value" HorizontalAlignment="Left" Margin="200,0,0,5" Width="150" Click="BtnDisplayOriginalResultValue_Click" Height="21" VerticalAlignment="Bottom"/>
             </Grid>
         </GroupBox>
         <Label Content="© SPA GmbH, Germany 2019, spa-gmbh.de&#xA;" HorizontalAlignment="Left" Margin="10,0,0,21" Width="365" FontSize="10" HorizontalContentAlignment="Center" Height="25" VerticalAlignment="Bottom" Visibility="Collapsed"/>
@@ -89,9 +89,9 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
-                <CheckBox x:Name="chkShowFunctionNumbers" Content="show function number" HorizontalAlignment="Left" Margin="161,0,0,7" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 2" AutomationProperties.HelpText="Trace field 2" />
-                <CheckBox x:Name="chkShowExecutionTime" Content="show function execution time" HorizontalAlignment="Left" Margin="309,0,0,7" Width="190" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 4: Exit minus entry time" AutomationProperties.HelpText="Trace field 4: Exit minus entry time"/>
-                <CheckBox x:Name="ckbHighlightOwn" Content="highlight own functions" HorizontalAlignment="Left" Margin="9,0,0,5" Width="170" Height="17" VerticalAlignment="Bottom" AutomationProperties.HelpText="Trace field 7: user-defined (1) or internal function (0)" ToolTip="Trace field 7: user-defined (1) or internal function (0)"/>
+                <CheckBox x:Name="chkShowFunctionNumbers" Content="show function _number" HorizontalAlignment="Left" Margin="161,0,0,7" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 2" AutomationProperties.HelpText="Trace field 2" />
+                <CheckBox x:Name="chkShowExecutionTime" Content="show function execution _time" HorizontalAlignment="Left" Margin="309,0,0,7" Width="190" Height="15" VerticalAlignment="Bottom" ToolTip="Trace field 4: Exit minus entry time" AutomationProperties.HelpText="Trace field 4: Exit minus entry time"/>
+                <CheckBox x:Name="ckbHighlightOwn" Content="_highlight own functions" HorizontalAlignment="Left" Margin="9,0,0,5" Width="170" Height="17" VerticalAlignment="Bottom" AutomationProperties.HelpText="Trace field 7: user-defined (1) or internal function (0)" ToolTip="Trace field 7: user-defined (1) or internal function (0)"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Trace file selection" HorizontalAlignment="Left" Margin="10,10,0,10" Width="410">
