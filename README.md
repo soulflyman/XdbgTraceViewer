@@ -2,14 +2,18 @@
 Display Xdebug generated trace files.
 
 # Requirements
+## Windows
+[.Net Framework 4.7](https://www.microsoft.com/en-us/download/details.aspx?id=55170) is required to run this Application. 
+
+## Webserver
 Install Xdebug and test if you can Debug some PHP files. After that set the following parameters in your php.ini:
 ```
 xdebug.trace_options=0
 xdebug.trace_format=1
 ```
-**xdebug.trace_options=0** is not required but recomended.
+Now you can start the trace by setting the cookie for xdebug. `` xdebug.trace_options=0``  is not required but recomended.
 
-OR
+**OR**
 
 Use the Xdebug php functions [xdebug_start_trace()](https://xdebug.org/docs/execution_trace#xdebug_start_trace) and xdebug_stop_trace() in your code to generate a trace file.
 
