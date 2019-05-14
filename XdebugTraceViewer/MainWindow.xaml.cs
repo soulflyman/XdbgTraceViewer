@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Threading;
 using Ookii.Dialogs.Wpf;
 
@@ -29,7 +31,6 @@ namespace XdbgTraceViewer
                 RuntimeConfig.Instance.TracesFolder = Properties.Settings.Default.CustomTraceFileFolder;
             }
 
-
             RefreshTraceFileList();
             WatchTraceFolder(RuntimeConfig.Instance.TracesFolder);
         }
@@ -44,6 +45,9 @@ namespace XdbgTraceViewer
                 var selectedTraceFileName = (TraceFileList.SelectedItem as XdebugTraces.TraceFileListItem)?.TraceFileName;
 
                 TraceFileList.ItemsSource = new XdebugTraces().GetList();
+
+                var view = (CollectionView)CollectionViewSource.GetDefaultView(TraceFileList.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("TraceFileName", ListSortDirection.Descending));
 
                 foreach (var traceFileListItem in TraceFileList.Items)
                 {
