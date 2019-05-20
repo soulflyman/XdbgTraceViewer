@@ -1,4 +1,12 @@
-﻿v1.1.0 (2019-05-14)
+﻿v1.1.1 (2019-05-20)
+---
+Fix:
+- Fix column header in file list view for sorting
+
+Removed:
+- Compiler target platform 'Any' removed
+
+v1.1.0 (2019-05-14)
 ---
 Add:
 - Acces Keys for check boxes and buttons.
