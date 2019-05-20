@@ -110,7 +110,7 @@
                     </ListView.RenderTransform>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="XdebugTrace" DisplayMemberBinding="{Binding TraceFileName}" Width="150"/>
+                            <GridViewColumn Header="TraceFileName" DisplayMemberBinding="{Binding TraceFileName}" Width="150"/>
                             <GridViewColumn Header="Timestamp" DisplayMemberBinding="{Binding TraceFileDate}" Width="120"/>
                             <GridViewColumn Header="Size" Width="80">
                                 <GridViewColumn.CellTemplate>
