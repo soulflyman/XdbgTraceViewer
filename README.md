@@ -1,6 +1,8 @@
 # XdbgTraceViewer
 Display Xdebug generated trace files.
 
+![Screenshot of XdbgTraceViewer](https://github.com/soulflyman/XdbgTraceViewer/blob/master/XdbgTraceViewer_screenshot.png)
+
 # Requirements
 ## Windows
 [.Net Framework 4.7](https://www.microsoft.com/en-us/download/details.aspx?id=55170) is required to run this Application. 
