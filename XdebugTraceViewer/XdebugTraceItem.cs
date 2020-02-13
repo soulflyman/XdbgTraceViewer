@@ -205,6 +205,13 @@ namespace XdbgTraceViewer
             IncludeName = traceSplit[7];
             File = traceSplit[8];
             Line = traceSplit[9];
+
+            IsExpanded = false;
+            IsReturnFormatted = false;
+            HighlightOwn = true;
+
+            if (traceSplit.Length < 11) return;
+
             ParameterCount = int.Parse(traceSplit[10]);
             Parameters = new string[ParameterCount];
 
@@ -212,10 +219,6 @@ namespace XdbgTraceViewer
             {
                 Parameters[i - 11] = traceSplit[i];
             }
-
-            IsExpanded = false;
-            IsReturnFormatted = false;
-            HighlightOwn = true;
         }
 
         /// <summary>
